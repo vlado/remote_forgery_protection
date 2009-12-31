@@ -1,1 +1,2 @@
-# RemoteForgeryProtection
+module RemoteForgeryProtection  
+end
