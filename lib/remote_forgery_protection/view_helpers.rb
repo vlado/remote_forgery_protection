@@ -1,38 +1,27 @@
 module RemoteForgeryProtection  
   module ViewHelpers    
     
-    def remote_forgery_protection
-      javascript_tag javascript_code_for_rfp
+    def remote_forgery_protection(options = {})
+      if File.exist?("#{RAILS_ROOT}/#{RemoteForgeryProtection::JS_FILE_PATH}") and !options[:inline]
+        %{
+          #{token_script_tag}
+          #{javascript_include_tag(RemoteForgeryProtection::JS_FILE_NAME)}
+        }
+      else
+        javascript_tag %{
+          #{token_declaration}
+          #{RemoteForgeryProtection.javascript_code}
+        }
+      end
     end 
     
-    def token_for_rfp
+    def token_declaration
       "window._token = '#{form_authenticity_token}';"
     end
-
-    def javascript_code_for_rfp
-      %{
-        #{token_for_rfp}
-
-        Ajax.Base.prototype.initialize = Ajax.Base.prototype.initialize.wrap(function() {
-          var args = $A(arguments), proceed = args.shift();
-          args[0] = args[0] || {};
-          var options = args[0];
-          if (!(options.method && options.method == "get")) {
-            var encodedToken = encodeURIComponent(_token);
-            if (Object.isString(options.parameters)) {
-              options.parameters += '&authenticity_token=' + encodedToken;
-            } else if (Object.isHash(options.parameters)) {
-              options.parameters = options.parameters.toObject();
-              options.parameters.authenticity_token = encodedToken;
-            } else {
-              options.parameters = options.parameters || {};
-              options.parameters.authenticity_token = encodedToken;
-            }
-          }
-          proceed.apply(null, args);
-        });
-      }
-    end   
+    
+    def token_script_tag
+      javascript_tag token_declaration
+    end
     
   end  
 end
