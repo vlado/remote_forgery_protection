@@ -17,15 +17,17 @@ module RemoteForgeryProtection
           var args = $A(arguments), proceed = args.shift();
           args[0] = args[0] || {};
           var options = args[0];
-          var encodedToken = encodeURIComponent(_token);
-          if (Object.isString(options.parameters)) {
-            options.parameters += '&authenticity_token=' + encodedToken;
-          } else if (Object.isHash(options.parameters)) {
-            options.parameters = options.parameters.toObject();
-            options.parameters.authenticity_token = encodedToken;
-          } else {
-            options.parameters = options.parameters || {};
-            options.parameters.authenticity_token = encodedToken;
+          if (!(options.method && options.method == "get")) {
+            var encodedToken = encodeURIComponent(_token);
+            if (Object.isString(options.parameters)) {
+              options.parameters += '&authenticity_token=' + encodedToken;
+            } else if (Object.isHash(options.parameters)) {
+              options.parameters = options.parameters.toObject();
+              options.parameters.authenticity_token = encodedToken;
+            } else {
+              options.parameters = options.parameters || {};
+              options.parameters.authenticity_token = encodedToken;
+            }
           }
           proceed.apply(null, args);
         });
