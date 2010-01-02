@@ -51,10 +51,15 @@ All future non GET Ajax request will automatically send authenticity_token param
 
 
 == More info
+
 http://kolodvor.net/2010/01/02/rails-csrf-and-ajax-requests
+
 http://api.rubyonrails.org/classes/ActionController/RequestForgeryProtection/ClassMethods.html
+
 http://isc.sans.org/diary.html?storyid=1750
+
 http://en.wikipedia.org/wiki/Cross-site_request_forgery
+
 http://opensoul.org/2008/10/24/ajax-and-request-forgery-protection
 
 
