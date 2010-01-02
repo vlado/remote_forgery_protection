@@ -6,7 +6,7 @@ Rails protects controller actions from CSRF (Cross-Site Request Forgery) attacks
 
 What about hand coded Ajax request? You can manually add authenticity_token parameter to all Ajax requests or you can let Remote Forgery Protection plugin do everything for you.
 
-*Supported Javascript libraries*: {Prototype}[http://www.prototypejs.org], {jQuery}[http://www.jquery.com] and {ExtJS}[http://www.extjs.com]
+<b>Supported Javascript libraries</b>: {Prototype}[http://www.prototypejs.org], {jQuery}[http://www.jquery.com] and {ExtJS}[http://www.extjs.com] (let me know if you would like to see it working with some other library)
 
 
 == Installation
