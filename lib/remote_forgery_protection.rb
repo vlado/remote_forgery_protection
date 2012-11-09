@@ -14,17 +14,8 @@ if (typeof(Prototype) != "undefined") {
     args[0] = args[0] || {};
     var options = args[0];
     if (!(options.method && options.method.toUpperCase() == "GET")) {
-      var encodedToken = encodeURIComponent(_token);
-      if (Object.isString(options.parameters)) {
-        if (options.parameters.indexOf("authenticity_token") == -1)
-          options.parameters += '&authenticity_token=' + encodedToken;
-      } else if (Object.isHash(options.parameters)) {
-        options.parameters = options.parameters.toObject();
-        options.parameters.authenticity_token = encodedToken;
-      } else {
-        options.parameters = options.parameters || {};
-        options.parameters.authenticity_token = encodedToken;
-      }
+      options.requestHeaders = options.requestHeaders || {};
+      options.requestHeaders["X-CSRF-Token"] = _token;
     }
     proceed.apply(null, args);
   });
